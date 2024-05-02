@@ -1,0 +1,50 @@
+import socket
+import requests
+
+def resolve_domain_name(domain_name):
+    try:
+        # Resolve the domain name to an IP address
+        ip_address = socket.gethostbyname(domain_name)
+        print(f"The IP address of {domain_name} is {ip_address}")
+        return ip_address
+    except socket.gaierror as e:
+        print(f"Error resolving {domain_name}: {e}")
+        return "ERROR_INVALID_DOMAIN"
+
+def http_request_from_ip(ip_address):
+    # URL for the request
+    url = f'http://{ip_address}'
+
+    # Making a GET request
+    response = requests.get(url)
+
+    # Checking the response
+    if response.status_code == 200:
+        print("Request was successful")
+        print("Response:")
+        print(response.text)
+    else:
+        print("Request failed with status code:", response.status_code)
+
+def http_request_from_url(url):
+
+    # Making a GET request
+    response = requests.get(url)
+
+    # Checking the response
+    if response.status_code == 200:
+        print("Request was successful")
+        print("Response:")
+        print(response.text)
+    else:
+        print("Request failed with status code:", response.status_code)
+
+# Example domain name
+domain_name = "www.google.org"
+# Resolve the domain name
+ip_address = resolve_domain_name(domain_name)
+http_request_from_ip(ip_address)
+
+#URL for the HTTP request
+#url = "https://www.ietf.org/rfc/rfc1035.txt" # a memo explaining DNS
+#http_request_from_url(url)
